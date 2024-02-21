@@ -5,7 +5,7 @@ def serial_to_file(port: str, baudrate: int, output_file: str):
     ser = serial.Serial(port, baudrate)
     
     try:
-        with open(output_file, 'w') as output_file_handle:
+        with open(output_file, 'a') as output_file_handle:
             while True:
                 line = ser.readline()
                 decoded_line = line.decode('utf-8').strip()
