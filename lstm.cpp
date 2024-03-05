@@ -26,11 +26,12 @@ int main() {
     LSTMCell lstmCell(input_size, hidden_size);
     DenseLayer denseLayer(input_size, num_classes);
 
+    int seq_len = 10;
+    for (int t = 0; t < seq_len; t++) {
+        lstmCell.forward(input + t*input_size);
+    }
     
     float output[num_classes];
-
-
-    lstmCell.forward(input);
     denseLayer.forward(lstmCell.h_t, output);
 
     for (int i = 0; i < num_classes; i++) {

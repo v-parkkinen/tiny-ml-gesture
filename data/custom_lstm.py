@@ -32,7 +32,7 @@ class CustomLSTMCell:
         # Initialize hidden state and cell state
         self.h_t = np.zeros((hidden_size, ))
         self.c_t = np.zeros((hidden_size, ))
-
+   
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
 

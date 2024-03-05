@@ -7,7 +7,7 @@ void MatrixMath::vectorMatrixMultiply(const float *matrix, const float *vector, 
     for (int i = 0; i < matrixSize; i++) {
         result[i] = 0;
         for (int j = 0; j < vectorSize; j++) {
-            result[i] += vector[j] * matrix[i * matrixSize + j];
+            result[i] += vector[j] * matrix[i * vectorSize + j];
         }
     }
 }
