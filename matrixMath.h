@@ -9,7 +9,7 @@ public:
     static void vectorMultiply(const float *vector1, const float *vector2, float *result, const int vectorSize);
     static void vectorAdd(const float *vector1, const float *vector2, float *result, const int vectorSize);
     static void sigmoid(const float *input, float *output, const int size);
-    static void tanh_activation(const float *input, float *output, const int size);
+    static void tanhActivation(const float *input, float *output, const int size);
 };
 
 #endif

@@ -30,7 +30,7 @@ void MatrixMath::sigmoid(const float *input, float *output, const int size) {
     }
 }
 
-void MatrixMath::tanh_activation(const float *input, float *output, const int size) {
+void MatrixMath::tanhActivation(const float *input, float *output, const int size) {
     for (int i = 0; i < size; i++) {
         output[i] = std::tanh(input[i]);
     }

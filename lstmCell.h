@@ -4,13 +4,13 @@
 
 class LSTMCell {
 public:
-    int input_size;
-    int hidden_size;
-    float *h_t, *c_t;
+    int inputSize;
+    int hiddenSize;
+    float *hiddenState, *cellState;
 
-    LSTMCell(int input_size, int hidden_size);
+    LSTMCell(int inputSize, int hiddenSize);
     ~LSTMCell();
-    void forward(float *x_t);
+    void forward(float *input);
 };
 
 #endif

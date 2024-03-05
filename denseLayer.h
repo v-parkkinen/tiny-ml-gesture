@@ -3,14 +3,14 @@
 
 class DenseLayer {
 public:
-    int input_size;
-    int output_size;
+    int inputSize;
+    int outputSize;
 
 
-    DenseLayer(int input_size, int output_size);
+    DenseLayer(int inputSize, int output_size);
     ~DenseLayer();
 
-    float* forward(float *x, float *output);
+    float* forward(float *input, float *output);
 };
 
 #endif

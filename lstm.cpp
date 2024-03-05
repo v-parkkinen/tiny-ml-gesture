@@ -5,9 +5,9 @@
 
 
 int main() {
-    int input_size =  6;
-    int hidden_size =  10;
-    int num_classes = 5;
+    int inputSize =  6;
+    int hiddenSize =  10;
+    int numClasses = 5;
 
     float input[60] = {
         0.4764710566127876, 0.31938762043024943, 0.6389980931754514, 0.5968458834687843, 0.5034561684596017, 0.4994125276569772,
@@ -23,18 +23,18 @@ int main() {
     };
 
     // Create an LSTMCell object
-    LSTMCell lstmCell(input_size, hidden_size);
-    DenseLayer denseLayer(input_size, num_classes);
+    LSTMCell lstmCell(inputSize, hiddenSize);
+    DenseLayer denseLayer(inputSize, numClasses);
 
     int seq_len = 10;
     for (int t = 0; t < seq_len; t++) {
-        lstmCell.forward(input + t*input_size);
+        lstmCell.forward(input + t*inputSize);
     }
     
-    float output[num_classes];
-    denseLayer.forward(lstmCell.h_t, output);
+    float output[numClasses];
+    denseLayer.forward(lstmCell.hiddenState, output);
 
-    for (int i = 0; i < num_classes; i++) {
+    for (int i = 0; i < numClasses; i++) {
         std::cout << output[i] << std::endl;
     }
     
