@@ -2,6 +2,9 @@
 #ifndef WEIGHTS_H
 #define WEIGHTS_H
 
+#include <avr/pgmspace.h>
+
+
 extern const float lstmIxWeights[60];
 extern const float lstmIhWeights[100];
 extern const float lstmFxWeights[60];

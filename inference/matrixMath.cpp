@@ -1,12 +1,15 @@
 // matrixMath.cpp
 #include <math.h>
+#include <avr/pgmspace.h>
+
 #include "matrixMath.h"
 
 void MatrixMath::vectorMatrixMultiply(const float *matrix, const float *vector, float *result, const int vectorSize, const int matrixSize) {
+    // NOTE: this function assumes that the matrix is stored in program memory!
     for (int i = 0; i < matrixSize; i++) {
         result[i] = 0;
         for (int j = 0; j < vectorSize; j++) {
-            result[i] += vector[j] * matrix[i * vectorSize + j];
+            result[i] += vector[j] * pgm_read_float(&matrix[i * vectorSize + j]);
         }
     }
 }
