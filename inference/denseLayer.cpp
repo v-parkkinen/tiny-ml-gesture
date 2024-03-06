@@ -1,5 +1,4 @@
-#include <iostream>
-#include <cmath>
+#include <math.h>
 
 #include "denseLayer.h"
 #include "weights.h"
@@ -29,7 +28,7 @@ float* DenseLayer::forward(float *x, float *result) {
 
     float exp_sum = 0.0;
     for (int i = 0; i < this->outputSize; i++) {
-        result[i] = std::exp(z[i] - max_z);
+        result[i] = exp(z[i] - max_z);
         exp_sum += result[i];
     }
 

@@ -1,4 +1,4 @@
-// weights.c
+// weights.cpp
 #include "weights.h"
 
 const float lstmIxWeights[60] =  {

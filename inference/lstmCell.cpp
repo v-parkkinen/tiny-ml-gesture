@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "lstmCell.h"
 #include "weights.h"
 #include "matrixMath.h"
