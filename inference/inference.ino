@@ -57,13 +57,12 @@ GyroValues readGyro(GyroValues *values) {
 }
 
 void preprocessGyroData(const GyroValues &values) {
-  // TODO: replace with actual preprocessing
-  preprocessedValues[0] = 0.1 * values.AcX;
-  preprocessedValues[1] = 0.1 * values.AcY;
-  preprocessedValues[2] = 0.1 * values.AcZ;
-  preprocessedValues[3] = 0.1 * values.GyX;
-  preprocessedValues[4] = 0.1 * values.GyY;
-  preprocessedValues[5] = 0.1 * values.GyZ;
+  preprocessedValues[0] = (values.AcX+24064)/50236;
+  preprocessedValues[1] = (values.AcY+9304)/30308;
+  preprocessedValues[2] = (values.AcZ+9712)/42479;
+  preprocessedValues[3] = (values.GyX+32039)/53771;
+  preprocessedValues[4] = (values.GyY+32768)/65535;
+  preprocessedValues[5] = (values.GyZ+32768)/65535;
 }
 
 int runInference(const float input[]) {
