@@ -1,7 +1,8 @@
 #include <Wire.h>
 
-#include "lstmCell.h"
+#include "dataBuffer.h"
 #include "denseLayer.h"
+#include "lstmCell.h"
 #include "weights.h"
 
 const int numClasses = 5;
@@ -15,7 +16,9 @@ const char* classes[numClasses] = {
 
 int inputSize =  6;
 int hiddenSize =  10;
+int seqLen = 10;
 
+DataBuffer buffer;
 float output[numClasses];
 LSTMCell lstmCell(inputSize, hiddenSize);
 DenseLayer denseLayer(inputSize, numClasses);
@@ -29,7 +32,7 @@ typedef struct {
     int16_t GyZ;
 } GyroValues;
 
-const int MPU_addr=0x68;
+const int MPU_addr = 0x68;
 GyroValues latestValues;
 float preprocessedValues[6];
 
@@ -65,9 +68,11 @@ void preprocessGyroData(const GyroValues &values) {
   preprocessedValues[5] = (values.GyZ+32768)/65535;
 }
 
-int runInference(const float input[]) {
-    lstmCell.forward(input);
+int runInference() {
+  for (int i = 0; i < seqLen; i++) {
+    lstmCell.forward(buffer.access(i));
     denseLayer.forward(lstmCell.hiddenState, output);
+  }
 }
 
 void setup() {
@@ -78,6 +83,7 @@ void setup() {
 void loop() {
   readGyro(&latestValues);
   preprocessGyroData(latestValues);
-  int classIndex = runInference(preprocessedValues);
+  buffer.push(preprocessedValues);
+  int classIndex = runInference();
   Serial.println(classes[classIndex]);
 }
