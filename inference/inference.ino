@@ -36,6 +36,20 @@ const int MPU_addr = 0x68;
 GyroValues latestValues;
 float preprocessedValues[6];
 
+int predictionsToClass(const float arr[numClasses]) {
+    int largestIndex = 0;
+    float largestValue = arr[0];
+
+    for (int i = 1; i < numClasses; i++) {
+        if (arr[i] > largestValue) {
+            largestIndex = i;
+            largestValue = arr[i];
+        }
+    }
+
+    return largestIndex;
+}
+
 void setupGyroscope() {
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
@@ -60,20 +74,20 @@ GyroValues readGyro(GyroValues *values) {
 }
 
 void preprocessGyroData(const GyroValues &values) {
-  preprocessedValues[0] = (values.AcX+24064)/50236;
-  preprocessedValues[1] = (values.AcY+9304)/30308;
-  preprocessedValues[2] = (values.AcZ+9712)/42479;
-  preprocessedValues[3] = (values.GyX+32039)/53771;
-  preprocessedValues[4] = (values.GyY+32768)/65535;
-  preprocessedValues[5] = (values.GyZ+32768)/65535;
+  preprocessedValues[0] = (float)(values.AcX+24064)/(float)50236;
+  preprocessedValues[1] = (float)(values.AcY+9304)/(float)30308;
+  preprocessedValues[2] = (float)(values.AcZ+9712)/(float)42479;
+  preprocessedValues[3] = (float)(values.GyX+32039)/(float)53771;
+  preprocessedValues[4] = (float)(values.GyY+32768)/(float)65535;
+  preprocessedValues[5] = (float)(values.GyZ+32768)/(float)65535;
 }
 
 int runInference() {
   for (int i = 0; i < seqLen; i++) {
     lstmCell.forward(buffer.access(i));
-    denseLayer.forward(lstmCell.hiddenState, output);
   }
-}
+    denseLayer.forward(lstmCell.hiddenState, output);
+  return predictionsToClass(output);
 
 void setup() {
   Serial.begin(9600);
