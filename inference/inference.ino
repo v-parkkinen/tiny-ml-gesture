@@ -86,8 +86,28 @@ int runInference() {
   for (int i = 0; i < seqLen; i++) {
     lstmCell.forward(buffer.access(i));
   }
-    denseLayer.forward(lstmCell.hiddenState, output);
+  Serial.println(formatFloatArr(lstmCell.hiddenState, hiddenSize));
+
+  denseLayer.forward(lstmCell.hiddenState, output);
+  Serial.println(formatFloatArr(output, numClasses));
   return predictionsToClass(output);
+}
+
+String formatFloatArr(float floatArray[], int arrayLength) {
+  String floatString = "["; // Initialize string with opening bracket
+  
+  // Iterate through the array and append each float to the string
+  for (int i = 0; i < arrayLength; i++) {
+    floatString += String(floatArray[i]);
+    if (i < arrayLength - 1) {
+      floatString += ", "; // Add comma and space between elements
+    }
+  }
+  floatString += "]"; // Add closing bracket
+  
+  return floatString; // Return the constructed string
+}
+
 
 void setup() {
   Serial.begin(9600);
@@ -98,6 +118,10 @@ void loop() {
   readGyro(&latestValues);
   preprocessGyroData(latestValues);
   buffer.push(preprocessedValues);
+  Serial.print("Latest preproc values: ");
+  Serial.println(formatFloatArr(preprocessedValues, inputSize));
+  Serial.print("Buffer 0: ");
+  Serial.println(formatFloatArr(buffer.access(0), inputSize));
   int classIndex = runInference();
   Serial.println(classes[classIndex]);
 }
